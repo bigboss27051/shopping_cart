@@ -11,7 +11,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom'
 import reducers from './reducers/'
-import {addToCart} from './actions/carts'
 import {postBook,deleteBook,updateBook} from './actions/books'
 import logger from 'redux-logger'
 import {applyMiddleware,createStore} from 'redux'
