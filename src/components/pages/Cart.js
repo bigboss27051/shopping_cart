@@ -1,10 +1,22 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Panel, Col, Row, Well, Button, ButtonGroup, Label} from 'react-bootstrap'
+import {Modal, Panel, Col, Row, Well, Button, ButtonGroup, Label} from 'react-bootstrap'
 import {bindActionCreators} from 'redux'
 import {deleteCartItem, addToCart, updateCart} from '../../actions/cart'
 
 class Cart extends Component {
+  constructor(){
+    super();
+    this.state = {
+      showModal:false
+    }
+  }
+  open(){
+    this.setState({showModal:true})
+  }
+  close(){
+    this.setState({showModal:false})
+  }
   handleDelete(_id){
     const currentCartToDelete = this.props.cart
     const indexToDelete = currentCartToDelete.findIndex(
@@ -23,7 +35,6 @@ class Cart extends Component {
   onDecrement(_id){
     this.props.updateCart(_id,-1)
   }
-
   render(){
     if(this.props.cart[0]){
       return this.renderCart();
@@ -59,12 +70,35 @@ class Cart extends Component {
                 </ButtonGroup>
               </Col>
             </Row>
+            <Modal show={this.state.showModal} onHide={this.close.bind(this)}>
+          <Modal.Header closeButton>
+            <Modal.Title>Thank you!</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <h6>Your order has been saved</h6>
+            <p>You will receive an email confirmation</p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Col xs={6}>
+              <h6>total $: </h6>
+            </Col>
+            <Button onClick={this.close.bind(this)}>Close</Button>
+          </Modal.Footer>
+        </Modal>
           </Panel>
         )
     },this)
     return (
       <Panel header='Cart' bsStyle='primary'>
         {cartItemList}
+        <Row>
+          <Col xs={12}>
+            <h6>Total amount: {this.props.totalAmount}</h6>
+            <Button bsStyle='success' bsSize='small' onClick={this.open.bind(this)} >
+              PROCEED TO CHECKOUT
+            </Button>
+          </Col>
+        </Row>
       </Panel>
     )
   }
@@ -72,7 +106,9 @@ class Cart extends Component {
 
 function mapStateToProps(state){
   return {
-    cart:state.cart.cart
+    cart:state.cart.cart,
+    totalAmount:state.cart.totalAmount,
+    totalQty:state.cart.totalQty
   }
 }
 

@@ -12,6 +12,17 @@ class BookList extends Component {
     this.props.getBooks();
   }
   render(){
+    const bookList = this.props.books.map((book) => {
+      return (
+        <Col xs={12} sm={6} md={4} key={book._id}>
+          <BookItem
+            _id={book._id}
+            title={book.title}
+            description={book.description}
+            price={book.price} />
+        </Col>
+      )
+    })
     return(
       <Grid>
         <Row>
@@ -21,17 +32,7 @@ class BookList extends Component {
           <Col xs={12} sm={6}>
             <BookForm />
           </Col>
-          {
-            this.props.books.map(book =>
-              <Col xs={12} sm={6} md={4} key={book._id}>
-                <BookItem
-                  _id={book._id}
-                  title={book.title}
-                  description={book.description}
-                  price={book.price} />
-              </Col>
-            )
-          }
+          {bookList}
         </Row>
       </Grid>
     )
