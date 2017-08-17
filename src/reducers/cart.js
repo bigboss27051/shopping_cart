@@ -1,5 +1,8 @@
 export function cart(state={cart:[]},action){
   switch (action.type) {
+    case 'GET_CART':
+      return {...state,cart:[...state.cart]}
+    break;
     case 'ADD_TO_CART':
       return {...state,
         cart:action.payload,

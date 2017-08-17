@@ -10,21 +10,10 @@
 
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom'
-import reducers from './reducers/'
-import {postBook,deleteBook,updateBook} from './actions/books'
-import logger from 'redux-logger'
-import {applyMiddleware,createStore} from 'redux'
-import {Provider} from 'react-redux'
-import BookList from './components/pages/BookList.js'
-
-
-const middleware = applyMiddleware(logger);
-const store = createStore(reducers ,middleware);
+import App from './App'
 
 ReactDOM.render(
-  <Provider store={store}>
-      <BookList />
-  </Provider>,
+    <App />,
   document.getElementById('root')
 );
 //

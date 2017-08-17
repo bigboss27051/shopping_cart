@@ -5,7 +5,6 @@ import {getBooks} from '../../actions/books'
 import {Grid ,Col, Row, Button} from 'react-bootstrap'
 import BookItem from './BookItem'
 import BookForm from './BookForm'
-import Cart from './Cart'
 
 class BookList extends Component {
   componentDisMount(){
@@ -23,18 +22,11 @@ class BookList extends Component {
         </Col>
       )
     })
+
     return(
-      <Grid>
-        <Row>
-          <Cart />
-        </Row>
-        <Row>
-          <Col xs={12} sm={6}>
-            <BookForm />
-          </Col>
-          {bookList}
-        </Row>
-      </Grid>
+      <div>
+         {bookList}
+      </div>
     )
   }
 }

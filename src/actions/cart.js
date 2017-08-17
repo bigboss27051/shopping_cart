@@ -19,3 +19,9 @@ export function updateCart(_id,unit){
     unit:unit
   }
 }
+
+export function getCart(){
+  return {
+    type:'GET_CART'
+  }
+}
