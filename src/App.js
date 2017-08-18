@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import reducers from './reducers/'
 import {postBook,deleteBook,updateBook} from './actions/books'
-import logger from 'redux-logger'
+//import logger from 'redux-logger'
 import {applyMiddleware,createStore} from 'redux'
 import {Provider} from 'react-redux'
 
@@ -12,9 +12,10 @@ import Footer from './components/pages/footer'
 import Cart from './components/cart/Cart';
 import BookForm from './components/books/BookForm';
 
-const middleware = applyMiddleware(logger);
-const store = createStore(reducers ,middleware);
 
+
+//const middleware = applyMiddleware(logger);
+const store = createStore(reducers);
 
 class App extends Component {
   render() {

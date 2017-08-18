@@ -5,8 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
- var index = require('./routes/index');
- var users = require('./routes/users');
+
 
 var app = express();
 
@@ -22,7 +21,55 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('*', function(req, res){  res.sendFile(path.resolve(__dirname, 'public', 'index.html')) }); 
+// APIS
+
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:27017/bookshop',function(err, db) {
+  if(!err) {
+    console.log("We are connected");
+  }
+});
+
+var Books = require('./models/books.js');
+
+// POST BOOKS
+app.post('/books',function(req,res){
+  var book = req.body;
+  Books.create(book,function(err,books){
+    if(err){
+      throw err;
+    }
+    res.json(books);
+  })
+});
+
+// GET BOOKS
+app.get('/books',(req,res)=>{
+  Books.find((err,books)=>{
+    if (err) {
+      throw err;
+    }
+    res.json(books);
+  })
+});
+
+// DELETE BOOKS
+app.delete('/books/:_id',(req,res)=>{
+  var query = {_id:req.params._id};
+  Books.remove(query,(err,books)=>{
+      if (err) {
+        throw err;
+      }
+      res.json(books);
+  })
+});
+
+//END APIs
+
+
+
+
+app.get('*', function(req, res){  res.sendFile(path.resolve(__dirname, 'public', 'index.html')) });
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
