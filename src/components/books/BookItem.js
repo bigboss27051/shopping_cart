@@ -1,5 +1,5 @@
 import React ,{Component} from 'react'
-import {Col, Row, Well, Button} from 'react-bootstrap'
+import {Image, Col, Row, Well, Button} from 'react-bootstrap'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import { addToCart,updateCart} from '../../actions/cart'
@@ -7,6 +7,15 @@ import { addToCart,updateCart} from '../../actions/cart'
 class BookItem extends Component {
 
   handleCart(e){
+    const book = [...this.props.cart,{
+      _id:this.props._id,
+      title:this.props.title,
+      description:this.props.description,
+      image:this.props.image,
+      price:this.props.price,
+      quantity:1
+    }]
+
     const currentBook = [...this.props.cart]
     const id = this.props._id
     const indexToUpdate = currentBook.findIndex(
@@ -14,14 +23,6 @@ class BookItem extends Component {
         return id === book._id
       }
     )
-
-    const book = [...this.props.cart,{
-      _id:this.props._id,
-      title:this.props.title,
-      description:this.props.description,
-      price:this.props.price,
-      quantity:1
-    }]
 
     if(indexToUpdate === -1 || this.props.cart.length <= 0){
 
@@ -35,7 +36,7 @@ class BookItem extends Component {
       if(carIndex === -1){
         this.props.addToCart(book);
       }else{
-        this.props.updateCart(_id,1)
+        this.props.updateCart(_id, 1, this.props.cart)
       }
     }
   }
@@ -45,7 +46,10 @@ class BookItem extends Component {
     return(
         <Well>
           <Row>
-            <Col xs={12} >
+            <Col xs={12} sm={4}>
+              <Image src={this.props.image} responsive />
+            </Col>
+            <Col xs={12} sm={8}>
               <h6>{this.props.title}</h6>
               <p>{this.props.description}</p>
               <h6>usd. {this.props.price}</h6>

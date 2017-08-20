@@ -18,6 +18,7 @@ class BookList extends Component {
             _id={book._id}
             title={book.title}
             description={book.description}
+            image={book.image}
             price={book.price} />
         </Col>
       )

@@ -1,27 +1,93 @@
-export function addToCart(book){
-  return {
-    type:'ADD_TO_CART',
-    payload:book
+import axios from 'axios'
+//GET CART
+
+export function getCart() {
+  return function(dispatch){
+    axios.get('/api/cart')
+    .then((response) => {
+      dispatch({
+        type:'GET_CART',
+        payload:response.data
+      })
+    })
+    .catch((err) => {
+      dispatch({
+        type:'GET_CART_REJECTED',
+        msg:'error when getting to the cart from session'
+      })
+    })
+  }
+}
+
+
+// ADD CART
+export function addToCart(cart){
+  return function(dispatch){
+    axios.post('/api/cart', cart)
+    .then((response) => {
+      dispatch({
+        type:'ADD_TO_CART',
+        payload:response.data
+        })
+      })
+      .catch((err) => {
+        dispatch({
+          type:'ADD_TO_CART_REJECTED',
+          msg:'error when adding to the cart'
+        })
+      })
   }
 }
 
 export function deleteCartItem(cart){
-  return {
-    type:'DELET_CART_ITEM',
-    payload:cart
+
+  return function(dispatch){
+    axios.post('/api/cart', cart)
+    .then((response) => {
+      dispatch({
+        type:'DELET_CART_ITEM',
+        payload:response.data
+        })
+      })
+      .catch((err) => {
+        dispatch({
+          type:'DELET_CART_ITEM_REJECTED',
+          msg:'error when deleting an item from the cart'
+        })
+      })
   }
 }
 
-export function updateCart(_id,unit){
-  return {
-    type:'UPDATE_CART',
-    _id:_id,
-    unit:unit
-  }
-}
+export function updateCart(_id, unit, cart){
+  const currentBookToUpdate = cart
+  const indexToUpdate = currentBookToUpdate.findIndex(
+    function(book){
+      return book._id === _id
+    }
+  )
 
-export function getCart(){
-  return {
-    type:'GET_CART'
+  const newBookToUpdate = {
+    ...currentBookToUpdate[indexToUpdate],
+    quantity:currentBookToUpdate[indexToUpdate].quantity + unit
   }
+
+  let cartUpdate = [...currentBookToUpdate.slice(0,indexToUpdate),
+    newBookToUpdate,
+    ...currentBookToUpdate.slice(indexToUpdate + 1)]
+
+    return function(dispatch){
+      axios.post('/api/cart', cartUpdate)
+      .then((response) => {
+        dispatch({
+          type:'UPDATE_CART',
+          payload:response.data
+          })
+        })
+        .catch((err) => {
+          dispatch({
+            type:'UPDATE_CART_REJECTED',
+            msg:'error when updating to the cart'
+          })
+        })
+    }
 }

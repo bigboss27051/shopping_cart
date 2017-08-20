@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Modal, Panel, Col, Row, Well, Button, ButtonGroup, Label} from 'react-bootstrap'
 import {bindActionCreators} from 'redux'
-import {deleteCartItem, addToCart, updateCart} from '../../actions/cart'
+import {deleteCartItem, addToCart, updateCart, getCart} from '../../actions/cart'
 
 class Cart extends Component {
   constructor(){
@@ -10,6 +10,9 @@ class Cart extends Component {
     this.state = {
       showModal:false
     }
+  }
+  componentDidMount(){
+    this.props.getCart();
   }
   open(){
     this.setState({showModal:true})
@@ -30,10 +33,10 @@ class Cart extends Component {
     this.props.deleteCartItem(currentAfterDelete)
   }
   onIncrement(_id){
-    this.props.updateCart(_id,1)
+    this.props.updateCart(_id,1,this.props.cart)
   }
   onDecrement(_id){
-    this.props.updateCart(_id,-1)
+    this.props.updateCart(_id,-1,this.props.cart)
   }
   render(){
     if(this.props.cart[0]){
@@ -116,7 +119,8 @@ function mapDispatchToProps(dispatch){
   return bindActionCreators({
     deleteCartItem:deleteCartItem,
     addToCart:addToCart,
-    updateCart:updateCart
+    updateCart:updateCart,
+    getCart:getCart
   },dispatch)
 }
 

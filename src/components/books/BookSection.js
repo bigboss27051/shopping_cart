@@ -13,9 +13,6 @@ class BookSection extends Component {
           <Cart />
         </Row>
         <Row>
-          <Col xs={12} sm={6}>
-            <BookForm />
-          </Col>
           <BookList />
         </Row>
       </Grid>
