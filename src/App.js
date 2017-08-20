@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import reducers from './reducers/'
 import {postBook,deleteBook,updateBook} from './actions/books'
-//import logger from 'redux-logger'
+import logger from 'redux-logger'
 import {applyMiddleware,createStore} from 'redux'
 import {Provider} from 'react-redux'
+import thunk from 'redux-thunk'
 
 import BookSection from './components/books/BookSection'
 import Menu from './components/pages/menu'
@@ -14,8 +15,8 @@ import BookForm from './components/books/BookForm';
 
 
 
-//const middleware = applyMiddleware(logger);
-const store = createStore(reducers);
+const middleware = applyMiddleware(thunk,logger);
+const store = createStore(reducers,middleware);
 
 class App extends Component {
   render() {

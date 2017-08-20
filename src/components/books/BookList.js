@@ -7,7 +7,7 @@ import BookItem from './BookItem'
 import BookForm from './BookForm'
 
 class BookList extends Component {
-  componentDisMount(){
+  componentDidMount(){
     this.props.getBooks();
   }
   render(){
