@@ -64,3 +64,10 @@ export function updateBook(book){
     payload:book
   }
 }
+
+// RESET FORM BOOK
+export function resetButton(){
+  return {
+    type:'RESET_BUTTON'
+  }
+}

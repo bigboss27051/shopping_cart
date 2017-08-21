@@ -3,7 +3,7 @@ import {MenuItem, InputGroup, DropdownButton, Image, Col, Row, Well, Panel, Form
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {findDOMNode} from 'react-dom'
-import {postBooks, deleteBook, getBooks} from '../../actions/books'
+import {postBooks, deleteBook, getBooks, resetButton} from '../../actions/books'
 import axios from 'axios'
 
 class BookForm extends Component {
@@ -46,6 +46,14 @@ class BookForm extends Component {
   onDelete(){
     let bookId = findDOMNode(this.refs.delete).value;
     this.props.deleteBook(bookId);
+  }
+
+  resetForm(){
+    this.props.resetButton();
+    findDOMNode(this.refs.title).value = '';
+    findDOMNode(this.refs.description).value = '';
+    findDOMNode(this.refs.price).value = '';
+    this.setState({img:''});
   }
 
   render(){
@@ -106,7 +114,11 @@ class BookForm extends Component {
                   placeholder='Enter Price'
                   ref='price' />
               </FormGroup>
-              <Button onClick={this.handleSubmit.bind(this)} bsStyle='primary'>Save book</Button>
+              <Button
+                onClick={(!this.props.msg)?(this.handleSubmit.bind(this)):(this.resetForm.bind(this))}
+                bsStyle={(!this.props.style)?('primary'):(this.props.style)}>
+                {(!this.props.msg)?('Saved Book'):(this.props.msg)}
+              </Button>
             </Panel>
             <Panel style={{marginTop:'25px'}}>
               <FormGroup controlId="formControlsSelect">
@@ -127,7 +139,9 @@ class BookForm extends Component {
 
 function mapStateToProps(state){
   return {
-    books:state.books.books
+    books:state.books.books,
+    msg:state.books.msg,
+    style:state.books.style
   }
 }
 
@@ -135,7 +149,8 @@ function mapDispatchToProps(dispatch){
   return bindActionCreators({
     postBooks,
     deleteBook,
-    getBooks
+    getBooks,
+    resetButton
   },dispatch)
 }
 
