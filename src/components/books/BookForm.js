@@ -93,21 +93,21 @@ class BookForm extends Component {
           </Col>
           <Col xs={12} sm={6}>
             <Panel>
-              <FormGroup controlId='title'>
+              <FormGroup controlId='title' validationState={this.props.validation} >
                 <ControlLabel>Title</ControlLabel>
                 <FormControl
                   type='text'
                   placeholder='Enter Title'
                   ref='title' />
               </FormGroup>
-              <FormGroup controlId='description'>
+              <FormGroup controlId='description' validationState={this.props.validation}>
                 <ControlLabel>Description</ControlLabel>
                 <FormControl
                   type='text'
                   placeholder='Enter Description'
                   ref='description' />
               </FormGroup>
-              <FormGroup controlId='price'>
+              <FormGroup controlId='price' validationState={this.props.validation}>
                 <ControlLabel>Price</ControlLabel>
                 <FormControl
                   type='text'
@@ -141,7 +141,8 @@ function mapStateToProps(state){
   return {
     books:state.books.books,
     msg:state.books.msg,
-    style:state.books.style
+    style:state.books.style,
+    validation:state.books.validation
   }
 }
 

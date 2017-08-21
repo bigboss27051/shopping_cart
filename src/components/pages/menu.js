@@ -5,6 +5,9 @@ import { bindActionCreators } from 'redux';
 import { getCart } from '../../actions/cart';
 
 class Menu extends Component {
+  componentDidMount(){
+    this.props.getCart();
+  }
   render() {
     return (
       <Navbar inverse fixedTop>
