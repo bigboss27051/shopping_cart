@@ -16,11 +16,15 @@ app.use(cookieParser());
 // APIS
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/bookshop',function(err, db) {
-  if(!err) {
-    console.log("We are connected");
-  }
-});
+//Mongo LAB
+mongoose.connect('mongodb://testUser:1234@ds151433.mlab.com:51433/bookshop')
+
+//Local database
+// mongoose.connect('mongodb://localhost:27017/bookshop',function(err, db) {
+//   if(!err) {
+//     console.log("We are connected");
+//   }
+// });
 
 var db = mongoose.connection;
 db.on('error',console.error.bind(console,'# MongoDB - connection error :'));

@@ -22554,30 +22554,6 @@ var _App2 = _interopRequireDefault(_App);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _reactDom2.default.render(_react2.default.createElement(_App2.default, null), document.getElementById('root'));
-//
-// store.dispatch(postBook(
-//
-// ))
-
-// store.dispatch(deleteBook(
-//   {id:1}
-// ))
-//
-// store.dispatch(updateBook({
-//   id:2,
-//   title:'Learn React in 24h'
-// }))
-//
-//
-// store.dispatch(addToCart([{id:1}]))
-// import React from 'react';
-// import ReactDOM from 'react-dom';
-// import './index.css';
-// import App from './App';
-// import registerServiceWorker from './registerServiceWorker';
-//
-// ReactDOM.render(<App />, document.getElementById('root'));
-// registerServiceWorker();
 
 /***/ }),
 /* 260 */
